@@ -5,6 +5,8 @@ import fire from 'services/firebase';
 
 export const AuthContext = React.createContext();
 
+export const AuthConsumer = AuthContext.Consumer;
+
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState(null);
 
