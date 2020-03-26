@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { AuthContext } from 'services/auth';
 
 const AuthLoadingState = ({ children }) => {
-  const { isAuthChecked } = useContext(AuthContext);
+  const { isAuthStatusKnown } = useContext(AuthContext);
 
-  return isAuthChecked ? children : 'loading...';
+  return isAuthStatusKnown ? children : 'loading...';
 };
 
 AuthLoadingState.propTypes = {

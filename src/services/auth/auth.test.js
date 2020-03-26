@@ -51,30 +51,30 @@ describe('AuthProvider', () => {
     expect(currentUser).toEqual('Test User');
   });
 
-  test('isAuthChecked initial value is false', () => {
-    let isAuthChecked;
+  test('isAuthStatusKnown initial value is false', () => {
+    let isAuthStatusKnown;
 
     render(
       <AuthProvider>
         <AuthContext.Consumer>
-          {({ isAuthChecked: isChecked }) => {
-            isAuthChecked = isChecked;
+          {({ isAuthStatusKnown: isChecked }) => {
+            isAuthStatusKnown = isChecked;
           }}
         </AuthContext.Consumer>
       </AuthProvider>
     );
 
-    expect(isAuthChecked).toBe(false);
+    expect(isAuthStatusKnown).toBe(false);
   });
 
-  test('isAuthChecked is true if auth state changed', () => {
-    let isAuthChecked;
+  test('isAuthStatusKnown is true if auth state changed', () => {
+    let isAuthStatusKnown;
 
     render(
       <AuthProvider>
         <AuthContext.Consumer>
-          {({ isAuthChecked: isChecked }) => {
-            isAuthChecked = isChecked;
+          {({ isAuthStatusKnown: isChecked }) => {
+            isAuthStatusKnown = isChecked;
           }}
         </AuthContext.Consumer>
       </AuthProvider>
@@ -84,6 +84,6 @@ describe('AuthProvider', () => {
       onAuthStateChanged('Test User');
     });
 
-    expect(isAuthChecked).toBe(true);
+    expect(isAuthStatusKnown).toBe(true);
   });
 });

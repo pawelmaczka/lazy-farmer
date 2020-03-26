@@ -6,7 +6,7 @@ import AuthLoadingState from './AuthLoadingState';
 describe('AuthLoadingState', () => {
   it('renders loading state if auth data is not fetched', () => {
     const { queryByText } = render(
-      <AuthContext.Provider value={{ isAuthChecked: false }}>
+      <AuthContext.Provider value={{ isAuthStatusKnown: false }}>
         <AuthLoadingState>content</AuthLoadingState>
       </AuthContext.Provider>
     );
@@ -17,7 +17,7 @@ describe('AuthLoadingState', () => {
 
   it('renders children if auth data is fetched', () => {
     const { queryByText } = render(
-      <AuthContext.Provider value={{ isAuthChecked: true }}>
+      <AuthContext.Provider value={{ isAuthStatusKnown: true }}>
         <AuthLoadingState>content</AuthLoadingState>
       </AuthContext.Provider>
     );
