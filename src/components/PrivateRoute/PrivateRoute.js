@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from 'services/auth';
 import * as ROUTES from 'constants/routes';
 
-const PrivageRoute = ({ children, ...restProps }) => {
+const PrivateRoute = ({ children, ...restProps }) => {
   const { currentUser } = React.useContext(AuthContext);
 
   return (
@@ -14,8 +14,8 @@ const PrivageRoute = ({ children, ...restProps }) => {
   );
 };
 
-PrivageRoute.propTypes = {
+PrivateRoute.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default PrivageRoute;
+export default PrivateRoute;
