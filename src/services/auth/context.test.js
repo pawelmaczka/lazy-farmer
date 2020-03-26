@@ -15,7 +15,7 @@ jest.mock('services/firebase', () => {
 });
 
 describe('AuthProvider', () => {
-  it('provides initial null value for currentUser', () => {
+  test('currentUser initial value is null', () => {
     let currentUser;
 
     render(
@@ -31,7 +31,7 @@ describe('AuthProvider', () => {
     expect(currentUser).toBeNull();
   });
 
-  it('provides updated currentUser object after if auth state changes', () => {
+  test('currentUser value is updated after auth state change', () => {
     let currentUser;
 
     render(
@@ -49,5 +49,41 @@ describe('AuthProvider', () => {
     });
 
     expect(currentUser).toEqual('Test User');
+  });
+
+  test('isAuthChecked initial value is false', () => {
+    let isAuthChecked;
+
+    render(
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({ isAuthChecked: isChecked }) => {
+            isAuthChecked = isChecked;
+          }}
+        </AuthContext.Consumer>
+      </AuthProvider>
+    );
+
+    expect(isAuthChecked).toBe(false);
+  });
+
+  test('isAuthChecked is true if auth state changed', () => {
+    let isAuthChecked;
+
+    render(
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({ isAuthChecked: isChecked }) => {
+            isAuthChecked = isChecked;
+          }}
+        </AuthContext.Consumer>
+      </AuthProvider>
+    );
+
+    act(() => {
+      onAuthStateChanged('Test User');
+    });
+
+    expect(isAuthChecked).toBe(true);
   });
 });
