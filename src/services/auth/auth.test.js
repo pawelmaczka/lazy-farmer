@@ -21,7 +21,7 @@ describe('AuthProvider', () => {
     render(
       <AuthProvider>
         <AuthContext.Consumer>
-          {({ currentUser: user }) => {
+          {({ user }) => {
             currentUser = user;
           }}
         </AuthContext.Consumer>
@@ -37,7 +37,7 @@ describe('AuthProvider', () => {
     render(
       <AuthProvider>
         <AuthContext.Consumer>
-          {({ currentUser: user }) => {
+          {({ user }) => {
             currentUser = user;
           }}
         </AuthContext.Consumer>

@@ -8,12 +8,12 @@ export const AuthContext = React.createContext();
 export const AuthConsumer = AuthContext.Consumer;
 
 export const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const [user, setUser] = React.useState(null);
   const [isAuthChecked, setIsAuthChecked] = React.useState(false);
 
   React.useEffect(() => {
     fire.auth().onAuthStateChanged((value) => {
-      setCurrentUser(value);
+      setUser(value);
       setIsAuthChecked(true);
     });
   }, []);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        currentUser,
+        user,
         isAuthChecked,
       }}
     >

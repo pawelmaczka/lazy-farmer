@@ -9,7 +9,7 @@ import PrivateRoute from './PrivateRoute';
 describe('PrivateRoute', () => {
   it('renders children component if user is logged in', () => {
     const { queryByText } = render(
-      <AuthContext.Provider value={{ currentUser: { username: 'Test User' } }}>
+      <AuthContext.Provider value={{ user: { username: 'Test User' } }}>
         <MemoryRouter initialEntries={[ROUTES.GAME]}>
           <PrivateRoute path={ROUTES.GAME}>
             <div>Private</div>
@@ -24,7 +24,7 @@ describe('PrivateRoute', () => {
 
   it('does not render children component if user is logged out', () => {
     const { queryByText } = render(
-      <AuthContext.Provider value={{ currentUser: null }}>
+      <AuthContext.Provider value={{ user: null }}>
         <MemoryRouter initialEntries={[ROUTES.GAME]}>
           <PrivateRoute path={ROUTES.GAME}>
             <div>Private</div>
@@ -41,7 +41,7 @@ describe('PrivateRoute', () => {
     let currentLocation;
 
     render(
-      <AuthContext.Provider value={{ currentUser: null }}>
+      <AuthContext.Provider value={{ user: null }}>
         <MemoryRouter initialEntries={[ROUTES.GAME]}>
           <PrivateRoute path={ROUTES.GAME}>
             <div>Private</div>
