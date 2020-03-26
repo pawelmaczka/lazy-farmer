@@ -36,6 +36,8 @@ module.exports = {
     "jest/prefer-to-have-length": "warn",
     "jest/valid-expect": "error",
     "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-curly-newline": 0,
   },
   "settings": {
     "import/resolver": {
