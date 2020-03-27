@@ -22,7 +22,6 @@ module.exports = {
       "sourceType": "module",
   },
   "plugins": [
-      "spellcheck",
       "react",
       "jest",
       "prettier",

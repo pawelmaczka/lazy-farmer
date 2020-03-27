@@ -1,11 +1,17 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { AuthContext } from 'services/auth';
 
 const AuthLoadingState = ({ children }) => {
   const { isAuthStatusKnown } = useContext(AuthContext);
 
-  return isAuthStatusKnown ? children : 'loading...';
+  return isAuthStatusKnown ? (
+    children
+  ) : (
+    <div>
+      <h1>Loading...</h1>
+    </div>
+  );
 };
 
 AuthLoadingState.propTypes = {
