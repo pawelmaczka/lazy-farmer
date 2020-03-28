@@ -80,11 +80,11 @@ const Landing = () => {
     } else {
       setShowLogInButton(true);
     }
-  }, [user, showLogInButton]);
+  }, [user, history]);
 
   const handleLogIn = React.useCallback(() => {
     history.push(ROUTES.LOGIN);
-  });
+  }, [history]);
 
   const handleCloseSnackbar = React.useCallback(() => {
     setIsShowingLoginError(false);

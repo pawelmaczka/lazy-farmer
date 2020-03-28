@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route, createMemoryHistory } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
 
 import { AuthContext } from 'services/auth';
 import * as ROUTES from 'constants/routes';
@@ -17,7 +17,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -36,7 +36,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -55,7 +55,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -76,7 +76,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -106,7 +106,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -130,7 +130,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -162,7 +162,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
             },
           ]}
         >
@@ -183,7 +183,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
               state: {
                 isLogInError: true,
               },
@@ -208,7 +208,7 @@ describe('Landing', () => {
         <MemoryRouter
           initialEntries={[
             {
-              path: ROUTES.LANDING,
+              pathname: ROUTES.LANDING,
               state: {
                 isLogInError: true,
               },
