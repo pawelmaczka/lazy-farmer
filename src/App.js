@@ -8,8 +8,6 @@ import {
 import { Normalize } from 'styled-normalize';
 import { StylesProvider } from '@material-ui/core/styles';
 
-import 'assets/fonts/Lato/LatoFont.css';
-
 import { AuthProvider } from 'services/auth';
 import PrivateRoute from 'components/PrivateRoute';
 import GlobalStyle from 'styles/GlobalStyle';
@@ -18,6 +16,8 @@ import Login from 'routes/Login';
 import Game from 'routes/Game';
 import AuthLoadingState from 'components/AuthLoadingState';
 import Landing from 'routes/Landing';
+import Layout from 'components/Layout';
+import MuiTheme from 'styles/MuiTheme';
 
 function App() {
   return (
@@ -25,24 +25,28 @@ function App() {
       <Normalize />
       <GlobalStyle />
       <StylesProvider injectFirst>
-        <Router>
-          <Switch>
-            <Route exact path={ROUTES.LANDING}>
-              <Landing />
-            </Route>
-            <AuthLoadingState>
-              <Route path={ROUTES.LOGIN}>
-                <Login />
-              </Route>
-              <PrivateRoute path={ROUTES.GAME}>
-                <Game />
-              </PrivateRoute>
-            </AuthLoadingState>
-            <Route path="*">
-              <Redirect to={ROUTES.LANDING} />
-            </Route>
-          </Switch>
-        </Router>
+        <MuiTheme>
+          <Router>
+            <Layout>
+              <Switch>
+                <Route exact path={ROUTES.LANDING}>
+                  <Landing />
+                </Route>
+                <AuthLoadingState>
+                  <Route path={ROUTES.LOGIN}>
+                    <Login />
+                  </Route>
+                  <PrivateRoute path={ROUTES.GAME}>
+                    <Game />
+                  </PrivateRoute>
+                </AuthLoadingState>
+                <Route path="*">
+                  <Redirect to={ROUTES.LANDING} />
+                </Route>
+              </Switch>
+            </Layout>
+          </Router>
+        </MuiTheme>
       </StylesProvider>
     </AuthProvider>
   );
