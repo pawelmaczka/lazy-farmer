@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, createMemoryHistory } from 'react-router-dom';
 
 import { AuthContext } from 'services/auth';
 import * as ROUTES from 'constants/routes';
@@ -198,5 +198,35 @@ describe('Landing', () => {
     const errorMessage = queryByText(/Something went wrong/i);
 
     expect(errorMessage).toBeInTheDocument();
+  });
+
+  it('sets to null isLogInError in location state after mounting with truthy isLogInError', () => {
+    let currentLocation;
+
+    render(
+      <AuthContext.Provider value={{ user: null }}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              path: ROUTES.LANDING,
+              state: {
+                isLogInError: true,
+              },
+            },
+          ]}
+        >
+          <Landing />
+          <Route
+            path="*"
+            render={({ location }) => {
+              currentLocation = location;
+              return null;
+            }}
+          />
+        </MemoryRouter>
+      </AuthContext.Provider>
+    );
+
+    expect(currentLocation.state).toEqual(null);
   });
 });

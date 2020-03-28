@@ -90,6 +90,15 @@ const Landing = () => {
     setIsShowingLoginError(false);
   }, []);
 
+  React.useEffect(() => {
+    if (isShowingLoginError) {
+      history.replace({
+        ...history.location,
+        state: null,
+      });
+    }
+  }, []);
+
   return (
     <Main>
       <Header>
