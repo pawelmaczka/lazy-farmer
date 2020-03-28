@@ -176,4 +176,27 @@ describe('Landing', () => {
 
     expect(playButton).toBeDisabled();
   });
+
+  it('shows error message if there is a problem logging in the user', () => {
+    const { queryByText } = render(
+      <AuthContext.Provider value={{ user: null }}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              path: ROUTES.LANDING,
+              state: {
+                isLogInError: true,
+              },
+            },
+          ]}
+        >
+          <Landing />
+        </MemoryRouter>
+      </AuthContext.Provider>
+    );
+
+    const errorMessage = queryByText(/Something went wrong/i);
+
+    expect(errorMessage).toBeInTheDocument();
+  });
 });

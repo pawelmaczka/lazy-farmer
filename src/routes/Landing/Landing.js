@@ -129,7 +129,7 @@ const Landing = () => {
           severity="error"
           variant="filled"
         >
-          This is a success message!
+          Something went wrong. Try to log in later.
         </MuiAlert>
       </Snackbar>
     </Main>
