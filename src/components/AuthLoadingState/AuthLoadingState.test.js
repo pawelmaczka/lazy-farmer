@@ -5,13 +5,13 @@ import AuthLoadingState from './AuthLoadingState';
 
 describe('AuthLoadingState', () => {
   it('renders loading state if auth data is not fetched', () => {
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       <AuthContext.Provider value={{ isAuthStatusKnown: false }}>
         <AuthLoadingState>content</AuthLoadingState>
       </AuthContext.Provider>
     );
 
-    const loadingState = queryByText(/loading/i);
+    const loadingState = queryByTestId('loading-screen');
     expect(loadingState).toBeInTheDocument();
   });
 
