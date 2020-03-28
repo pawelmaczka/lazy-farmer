@@ -1,43 +1,50 @@
-import React, { useCallback, useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { AuthContext } from 'services/auth';
 import { Redirect } from 'react-router-dom';
 import firebase from 'firebase';
 import fire from 'services/firebase';
-
 import * as ROUTES from 'constants/routes';
+
+import LoadingScreen from 'components/LoadingScreen';
 
 const Login = () => {
   const { user } = useContext(AuthContext);
   const [isLogInError, setIsLogInError] = useState(false);
 
   useEffect(() => {
-    fire
-      .auth()
-      .getRedirectResult()
-      .then(() => {
-        setIsLogInError(false);
-      })
-      .catch(() => {
+    async function componentDidMount() {
+      try {
+        await fire.auth().getRedirectResult();
+        if (!user) {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          fire.auth().signInWithRedirect(provider);
+        }
+      } catch {
         setIsLogInError(true);
-      });
+      }
+    }
+
+    componentDidMount();
   }, []);
 
-  const logIn = useCallback(() => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    fire.auth().signInWithRedirect(provider);
-  }, []);
+  if (isLogInError) {
+    return (
+      <Redirect
+        to={{
+          pathname: ROUTES.LANDING,
+          state: {
+            isLogInError: true,
+          },
+        }}
+      />
+    );
+  }
 
-  return user ? (
-    <Redirect to={ROUTES.GAME} />
-  ) : (
-    <div>
-      <h1>login</h1>
-      {isLogInError && 'Nie udało się zalogować. Spróbuj jeszcze raz.'}
-      <button type="button" onClick={logIn}>
-        log in
-      </button>
-    </div>
-  );
+  if (user) {
+    return <Redirect to={ROUTES.GAME} />;
+  }
+
+  return <LoadingScreen />;
 };
 
 export default Login;
