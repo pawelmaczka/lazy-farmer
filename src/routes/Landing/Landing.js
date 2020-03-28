@@ -1,89 +1,137 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import { Button, Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import { FaPlay } from 'react-icons/fa';
 
 import { AuthContext } from 'services/auth';
 import * as ROUTES from 'constants/routes';
-import farmer from 'assets/images/farmer.svg';
 import device from 'styles/device';
-
-const mobileLWidth = '40.5rem;';
+import Logo from 'components/Logo';
 
 const Main = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
   padding: 0 1rem;
+  z-index: 0;
 `;
 
 const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Buttons = styled.div`
   position: relative;
   width: 100%;
-  margin-bottom: 3rem;
+`;
+
+const PlayButtonWrapper = styled.div`
+  background-color: white;
+  width: 100%;
+`;
+
+const PlayButton = styled(Button)`
+  font-size: 2rem;
+  width: 100%;
 
   @media ${device.mobileL} {
-    width: ${mobileLWidth};
+    width: 40.5rem;
   }
 `;
 
-const H1 = styled.h1`
+const LogInButtonAnimation = keyframes`
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(calc(100% + 1.5rem));
+  }
+`;
+
+const LogInButton = styled(PlayButton)`
+  font-size: 2rem;
+  text-transform: none;
   position: absolute;
-  bottom: 2.5rem;
-  margin: 0;
-  font-size: 4.5rem;
-  color: white;
-  text-shadow: 0.2rem 0.2rem 0.3rem black;
-
-  @media ${device.mobileM} {
-    font-size: 5rem;
-  }
-`;
-
-const StyledButton = styled(Button)`
-  font-size: 3rem;
-  width: 100%;
-
-  @media ${device.mobileL} {
-    width: ${mobileLWidth};
-  }
-`;
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  animation: ${LogInButtonAnimation} 0.7s;
+  animation-fill-mode: forwards;
 `;
 
 const Landing = () => {
-  const history = useHistory();
+  const [showLogInButton, setShowLogInButton] = React.useState(false);
   const { user } = React.useContext(AuthContext);
+  const history = useHistory();
+  const location = useLocation();
+  const [isShowingLoginError, setIsShowingLoginError] = React.useState(
+    location.state?.isLogInError ?? false
+  );
 
   const handlePlay = React.useCallback(() => {
-    history.push(user ? ROUTES.GAME : ROUTES.LOGIN);
+    if (user) {
+      history.push(ROUTES.GAME);
+    } else {
+      setShowLogInButton(true);
+    }
+  }, [user, showLogInButton]);
+
+  const handleLogIn = React.useCallback(() => {
+    history.push(ROUTES.LOGIN);
+  });
+
+  const handleCloseSnackbar = React.useCallback(() => {
+    setIsShowingLoginError(false);
   }, []);
 
   return (
     <Main>
       <Header>
-        <Img src={farmer} alt="farmer" />
-        <H1>Lazy-Farmer</H1>
+        <Logo />
       </Header>
-      <StyledButton
-        variant="contained"
-        color="primary"
-        size="large"
-        startIcon={<FaPlay />}
-        onClick={handlePlay}
+      <Buttons>
+        <PlayButtonWrapper>
+          <PlayButton
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<FaPlay />}
+            onClick={handlePlay}
+            disabled={showLogInButton}
+          >
+            Play!
+          </PlayButton>
+        </PlayButtonWrapper>
+        {showLogInButton && (
+          <LogInButton
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={handleLogIn}
+          >
+            Log in with Google
+          </LogInButton>
+        )}
+      </Buttons>
+      <Snackbar
+        open={isShowingLoginError}
+        autoHideDuration={10000}
+        onClose={handleCloseSnackbar}
       >
-        Play!
-      </StyledButton>
+        <MuiAlert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          variant="filled"
+        >
+          This is a success message!
+        </MuiAlert>
+      </Snackbar>
     </Main>
   );
 };
