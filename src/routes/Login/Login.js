@@ -12,19 +12,19 @@ const Login = () => {
   const [isLogInError, setIsLogInError] = useState(false);
 
   useEffect(() => {
-    async function componentDidMount() {
-      try {
-        await fire.auth().getRedirectResult();
+    fire
+      .auth()
+      .getRedirectResult()
+      // eslint-disable-next-line consistent-return
+      .then(() => {
         if (!user) {
           const provider = new firebase.auth.GoogleAuthProvider();
-          fire.auth().signInWithRedirect(provider);
+          return fire.auth().signInWithRedirect(provider);
         }
-      } catch {
+      })
+      .catch(() => {
         setIsLogInError(true);
-      }
-    }
-
-    componentDidMount();
+      });
   }, []);
 
   if (isLogInError) {
