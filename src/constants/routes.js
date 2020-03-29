@@ -1,8 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-const addPublicUrl = (path) =>
-  process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL + path : path;
-
-export const LANDING = addPublicUrl('/');
-export const LOGIN = addPublicUrl('/login');
-export const LOGOUT = addPublicUrl('/logout');
-export const GAME = addPublicUrl('/game');
+export const LANDING = '/';
+export const LOGIN = '/login';
+export const LOGOUT = '/logout';
+export const GAME = '/game';
