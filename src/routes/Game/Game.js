@@ -1,18 +1,24 @@
 import React from 'react';
-import fire from 'services/firebase';
+import styled from 'styled-components/macro';
+import PotatoField from 'components/PotatoField';
+import PumpkinField from 'components/PumpkinField';
+import CarrotField from 'components/CarrotField';
+import CabbageField from 'components/CabbageField';
+
+const StyledGame = styled.div`
+  background-color: #85a600;
+`;
 
 const Game = () => {
-  const logOut = React.useCallback(() => {
-    fire.auth().signOut();
-  }, []);
-
   return (
-    <div>
-      Game
-      <button type="button" onClick={logOut}>
-        Log out
-      </button>
-    </div>
+    <StyledGame>
+      <div>
+        <PotatoField />
+        <PumpkinField />
+        <CarrotField />
+        <CabbageField />
+      </div>
+    </StyledGame>
   );
 };
 

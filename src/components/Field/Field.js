@@ -26,6 +26,16 @@ const Field = ({ svgComponents }) => {
     setLevel((lvl) => (lvl === 4 ? 0 : lvl + 1));
   }, [level]);
 
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setLevel((lvl) => (lvl === 4 ? 0 : lvl + 1));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   const Image = svgComponents[level];
 
   return (
