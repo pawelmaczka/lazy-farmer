@@ -5,22 +5,26 @@ import device from 'styles/device';
 
 const FieldsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1em 1em 1em 1em;
+  grid-template-columns: 1em 1em 1em 1em 1em;
   grid-template-rows: 0.5em 0.5em 0.5em 0.5em;
 `;
 
 const StyledFields = styled.div`
-  display: flex;
-  justify-content: center;
-  font-size: 8rem;
+  font-size: 7rem;
   padding-top: 0.8em;
+  overflow: hidden;
+  width: 4.5em;
+
+  @media ${device.mobileS} {
+    font-size: 7rem;
+  }
 
   @media ${device.mobileM} {
-    font-size: 10rem;
+    font-size: 8rem;
   }
 
   @media ${device.mobileL} {
-    font-size: 12rem;
+    font-size: 9rem;
   }
 
   @media ${device.tablet} {
