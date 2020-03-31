@@ -38,6 +38,18 @@ module.exports = {
     "react/jsx-one-expression-per-line": 0,
     "react/jsx-props-no-spreading": 0,
     "react/jsx-curly-newline": 0,
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [{
+          "name": "styled-components",
+          "message": "Please import from styled-components/macro."
+        }],
+        "patterns": [
+          "!styled-components/macro"
+        ]
+      }
+    ],
   },
   "settings": {
     "import/resolver": {
