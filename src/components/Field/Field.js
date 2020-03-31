@@ -61,7 +61,7 @@ const Field = ({ svgComponents }) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setLevel((lvl) => (lvl === 4 ? 0 : lvl + 1));
-    }, 3000);
+    }, Math.random() * 60000);
 
     return () => {
       clearInterval(interval);
