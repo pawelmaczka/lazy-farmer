@@ -30,6 +30,10 @@ const StyledFields = styled.div`
   @media ${device.laptop} {
     font-size: 20rem;
   }
+
+  @media ${device.laptopL} {
+    font-size: 25rem;
+  }
 `;
 
 const Fields = ({ children }) => (
