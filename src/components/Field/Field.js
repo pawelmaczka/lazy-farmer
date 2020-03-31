@@ -2,19 +2,51 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import PropTypes from 'prop-types';
 
-const fieldWidth = 40;
-
 const StyledField = styled.div`
-  width: ${fieldWidth}rem;
-  height: ${fieldWidth * 0.7}rem;
-  position: relative;
+  width: 1em;
+  height: 0.7em;
   display: inline-block;
+  pointer-events: none;
+
+  position: relative;
+
+  &:nth-child(4n - 2) {
+    transform: translate(-50%, -35%);
+  }
+
+  &:nth-child(4n - 1) {
+    transform: translate(-100%, -70%);
+  }
+
+  &:nth-child(4n) {
+    transform: translate(-150%, -105%);
+  }
+
+  &:nth-child(n + 5) {
+    left: 50%;
+    top: -35%;
+  }
+
+  &:nth-child(n + 9) {
+    left: 100%;
+    top: -70%;
+  }
+
+  &:nth-child(n + 13) {
+    left: 150%;
+    top: -105%;
+  }
 
   svg {
     pointer-events: none;
 
+    &:hover {
+      filter: drop-shadow(5px 5px 10px rgba(221, 255, 83, 0.7));
+    }
+
     * {
       pointer-events: visibleFill;
+      cursor: pointer;
     }
   }
 `;
@@ -29,7 +61,7 @@ const Field = ({ svgComponents }) => {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setLevel((lvl) => (lvl === 4 ? 0 : lvl + 1));
-    }, 1000);
+    }, 3000 + Math.random() * 60000);
 
     return () => {
       clearInterval(interval);
