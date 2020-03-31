@@ -4,15 +4,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
+import ResourtceCounter from 'components/ResourceCounter';
+
 import fire from 'services/firebase';
 
 const Resources = styled.div`
   flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const StyledToolbar = styled(Toolbar)`
   background: #96a646;
   height: 10rem;
+`;
+
+const StyledButton = styled(Button)`
+  white-space: nowrap;
 `;
 
 const GameBar = () => {
@@ -24,15 +32,21 @@ const GameBar = () => {
     <div>
       <AppBar position="static">
         <StyledToolbar>
-          <Resources />
-          <Button
+          <Resources>
+            <ResourtceCounter resource="cabbage" amount={20} />
+            <ResourtceCounter resource="carrot" amount={20} />
+            <ResourtceCounter resource="potato" amount={20} />
+            <ResourtceCounter resource="pumpkin" amount={20} />
+            <ResourtceCounter resource="tomato" amount={20} />
+          </Resources>
+          <StyledButton
             variant="outlined"
             size="large"
             color="inherit"
             onClick={logOut}
           >
             Log out
-          </Button>
+          </StyledButton>
         </StyledToolbar>
       </AppBar>
     </div>
