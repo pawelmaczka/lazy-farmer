@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import device from 'styles/device';
 
+import Field from 'components/Field';
+
 const FieldsGrid = styled.div`
   display: grid;
   grid-template-columns: 1em 1em 1em 1em 1em;
@@ -40,14 +42,20 @@ const StyledFields = styled.div`
   }
 `;
 
-const Fields = ({ children }) => (
+const sortById = (first, second) => first.id - second.id;
+
+const Fields = ({ fields }) => (
   <StyledFields>
-    <FieldsGrid>{children}</FieldsGrid>
+    <FieldsGrid>
+      {fields.sort(sortById).map((field) => (
+        <Field key={field.id} field={field} />
+      ))}
+    </FieldsGrid>
   </StyledFields>
 );
 
 Fields.propTypes = {
-  children: PropTypes.node.isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Fields;
