@@ -39,9 +39,9 @@ const Game = () => {
     };
   }, []);
 
-  return state.isDataFetched ? (
+  return state.isDataFetched && state.farm ? (
     <StyledGame>
-      <GameBar />
+      <GameBar resources={state.farm.resources} />
       <GameArea>
         <Fields>
           <PotatoField />

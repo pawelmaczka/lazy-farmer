@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components/macro';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,7 +24,7 @@ const StyledButton = styled(Button)`
   white-space: nowrap;
 `;
 
-const GameBar = () => {
+const GameBar = ({ resources }) => {
   const logOut = React.useCallback(() => {
     fire.auth().signOut();
   }, []);
@@ -33,11 +34,26 @@ const GameBar = () => {
       <AppBar position="static">
         <StyledToolbar>
           <Resources>
-            <ResourtceCounter resource="cabbage" amount={20} />
-            <ResourtceCounter resource="carrot" amount={20} />
-            <ResourtceCounter resource="potato" amount={20} />
-            <ResourtceCounter resource="pumpkin" amount={20} />
-            <ResourtceCounter resource="tomato" amount={20} />
+            <ResourtceCounter
+              resource="cabbage"
+              amount={resources?.cabbage ?? 0}
+            />
+            <ResourtceCounter
+              resource="carrot"
+              amount={resources?.carrot ?? 0}
+            />
+            <ResourtceCounter
+              resource="potato"
+              amount={resources?.potato ?? 0}
+            />
+            <ResourtceCounter
+              resource="pumpkin"
+              amount={resources?.pumpkin ?? 0}
+            />
+            <ResourtceCounter
+              resource="tomato"
+              amount={resources?.tomato ?? 0}
+            />
           </Resources>
           <StyledButton
             variant="outlined"
@@ -51,6 +67,16 @@ const GameBar = () => {
       </AppBar>
     </div>
   );
+};
+
+GameBar.propTypes = {
+  resources: PropTypes.shape({
+    cabbage: PropTypes.number.isRequired,
+    carrot: PropTypes.number.isRequired,
+    potato: PropTypes.number.isRequired,
+    pumpkin: PropTypes.number.isRequired,
+    tomato: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default GameBar;
