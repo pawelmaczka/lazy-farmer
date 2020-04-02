@@ -21,11 +21,11 @@ import { ReactComponent as tomato3 } from './img/tomato_3.svg';
 import { ReactComponent as tomato4 } from './img/tomato_4.svg';
 
 const fieldImages = {
-  cabbage: [all0, cabbage1, cabbage2, cabbage3, cabbage4],
-  carrot: [all0, carrot1, carrot2, carrot3, carrot4],
-  potato: [all0, potato1, potato2, potato3, potato4],
-  pumpkin: [all0, pumpkin1, pumpkin2, pumpkin3, pumpkin4],
-  tomato: [all0, tomato1, tomato2, tomato3, tomato4],
+  cabbage: [all0, all0, cabbage1, cabbage2, cabbage3, cabbage4],
+  carrot: [all0, all0, carrot1, carrot2, carrot3, carrot4],
+  potato: [all0, all0, potato1, potato2, potato3, potato4],
+  pumpkin: [all0, all0, pumpkin1, pumpkin2, pumpkin3, pumpkin4],
+  tomato: [all0, all0, tomato1, tomato2, tomato3, tomato4],
 };
 
 const getFieldImage = (type, level) => fieldImages[type][level];
