@@ -1,89 +1,58 @@
 import React from 'react';
-import styled, { css } from 'styled-components/macro';
 import PropTypes from 'prop-types';
 import firebase from 'firebase';
+// import { CircularProgress } from '@material-ui/core';
 
 import getFieldImage from './getFieldImage';
+import { getFieldLevel } from './helpers';
+
+import * as Styled from './Field.style';
 
 const plant = firebase.functions().httpsCallable('plant');
 // const TIME_TO_ROTTEN = 10800000;
 
-const StyledField = styled.div`
-  width: 1em;
-  height: 0.7em;
-  display: inline-block;
-  pointer-events: none;
-  position: relative;
+// const Loading = styled(CircularProgress)`
+//   position: absolute;
+//   top: 0.6em;
+//   left: 0.35em;
+//   z-index: 2;
+// `;
 
-  &:nth-child(5n - 3) {
-    transform: translate(-50%, -35%);
-  }
+const Field = ({ field: { id, plantedAtTimestamp, type } }) => {
+  const [level, setLevel] = React.useState(
+    getFieldLevel(type, plantedAtTimestamp)
+  );
+  const [isPerformingAction, setIsPerformingAction] = React.useState(false);
 
-  &:nth-child(5n - 2) {
-    transform: translate(-100%, -70%);
-  }
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setLevel(getFieldLevel(type, plantedAtTimestamp));
+    }, 1000);
 
-  &:nth-child(5n - 1) {
-    transform: translate(-150%, -105%);
-  }
+    return () => clearInterval(interval);
+  }, [plantedAtTimestamp]);
 
-  &:nth-child(5n) {
-    transform: translate(-200%, -140%);
-  }
-
-  &:nth-child(n + 6) {
-    left: 50%;
-    top: -35%;
-  }
-
-  &:nth-child(n + 11) {
-    left: 100%;
-    top: -70%;
-  }
-
-  &:nth-child(n + 16) {
-    left: 150%;
-    top: -105%;
-  }
-
-  svg {
-    pointer-events: none;
-
-    ${({ grayed }) =>
-      grayed &&
-      css`
-        filter: grayscale(70%);
-      `}
-
-    &:hover {
-      filter: drop-shadow(5px 5px 10px rgba(221, 255, 83, 0.7));
-    }
-
-    * {
-      pointer-events: visibleFill;
-      cursor: pointer;
-    }
-  }
-`;
-
-const Field = ({ field: { id, productionStartTimestamp, type } }) => {
-  const handleClick = React.useCallback(() => {
-    plant({ fieldId: id, type });
+  const handleClick = React.useCallback(async () => {
+    await setIsPerformingAction(true);
+    await plant({ fieldId: id, type });
+    await setIsPerformingAction(false);
   }, []);
 
-  const Image = getFieldImage(type, 0);
+  const Image = getFieldImage(type, level);
 
   return (
-    <StyledField grayed={!productionStartTimestamp}>
+    <Styled.Field grayscale={level === 0}>
+      {/* {isPerformingAction && <Loading size={30} disableShrink />} */}
+      {/* <Loading size={30} disableShrink /> */}
       <Image onClick={handleClick} />
-    </StyledField>
+    </Styled.Field>
   );
 };
 
 Field.propTypes = {
   field: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    productionStartTimestamp: PropTypes.number,
+    plantedAtTimestamp: PropTypes.number,
     type: PropTypes.string.isRequired,
   }).isRequired,
 };

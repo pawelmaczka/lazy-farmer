@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-
-import device from 'styles/device';
 
 import { ReactComponent as pumpkin } from './img/pumpkin_counter.svg';
 import { ReactComponent as cabbage } from './img/cabbage_counter.svg';
 import { ReactComponent as carrot } from './img/carrot_counter.svg';
 import { ReactComponent as potato } from './img/potato_counter.svg';
 import { ReactComponent as tomato } from './img/tomato_counter.svg';
+
+import * as Styled from './ResourceCounter.style';
 
 const ResourceImages = {
   cabbage,
@@ -18,36 +17,16 @@ const ResourceImages = {
   tomato,
 };
 
-const StyledCounter = styled.div`
-  display: flex;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: bold;
-  margin-right: 2rem;
-  font-size: 1.4rem;
-
-  @media ${device.laptop} {
-    margin-right: 5rem;
-    font-size: 2rem;
-  }
-`;
-
-const ImageWrapper = styled.div`
-  display: block;
-  width: 4rem;
-  margin-right: 1rem;
-`;
-
 const ResourceCounter = ({ resource, amount }) => {
   const Image = ResourceImages[resource];
 
   return (
-    <StyledCounter>
-      <ImageWrapper>
+    <Styled.Counter>
+      <Styled.ImageWrapper>
         <Image />
-      </ImageWrapper>
+      </Styled.ImageWrapper>
       {amount}
-    </StyledCounter>
+    </Styled.Counter>
   );
 };
 

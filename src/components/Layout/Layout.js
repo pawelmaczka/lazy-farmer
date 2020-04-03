@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
 
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-`;
+import * as Styled from './Layout.style';
 
-const Layout = ({ children }) => <Content>{children}</Content>;
+const Layout = ({ children }) => <Styled.Content>{children}</Styled.Content>;
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,

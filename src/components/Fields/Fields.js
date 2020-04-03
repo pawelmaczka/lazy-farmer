@@ -1,57 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-import device from 'styles/device';
 
 import Field from 'components/Field';
-
-const FieldsGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1em 1em 1em 1em 1em;
-  grid-template-rows: 0.5em 0.5em 0.5em 0.5em;
-`;
-
-const StyledFields = styled.div`
-  font-size: 7rem;
-  padding-top: 0.8em;
-  overflow: hidden;
-  width: 4.5em;
-
-  @media ${device.mobileS} {
-    font-size: 7rem;
-  }
-
-  @media ${device.mobileM} {
-    font-size: 8rem;
-  }
-
-  @media ${device.mobileL} {
-    font-size: 9rem;
-  }
-
-  @media ${device.tablet} {
-    font-size: 15rem;
-  }
-
-  @media ${device.laptop} {
-    font-size: 20rem;
-  }
-
-  @media ${device.laptopL} {
-    font-size: 25rem;
-  }
-`;
+import * as Styled from './Fields.style';
 
 const sortById = (first, second) => first.id - second.id;
 
 const Fields = ({ fields }) => (
-  <StyledFields>
-    <FieldsGrid>
+  <Styled.Fields>
+    <Styled.FieldsGrid>
       {fields.sort(sortById).map((field) => (
         <Field key={field.id} field={field} />
       ))}
-    </FieldsGrid>
-  </StyledFields>
+    </Styled.FieldsGrid>
+  </Styled.Fields>
 );
 
 Fields.propTypes = {

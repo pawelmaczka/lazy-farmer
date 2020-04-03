@@ -1,28 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components/macro';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-
-import ResourtceCounter from 'components/ResourceCounter';
+import MuiAppBar from '@material-ui/core/AppBar';
 
 import fire from 'services/firebase';
 
-const Resources = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const StyledToolbar = styled(Toolbar)`
-  background: #96a646;
-  height: 10rem;
-`;
-
-const StyledButton = styled(Button)`
-  white-space: nowrap;
-`;
+import ResourtceCounter from 'components/ResourceCounter';
+import * as Styled from './GameBar.style';
 
 const GameBar = ({ resources }) => {
   const logOut = React.useCallback(() => {
@@ -31,9 +14,9 @@ const GameBar = ({ resources }) => {
 
   return (
     <div>
-      <AppBar position="static">
-        <StyledToolbar>
-          <Resources>
+      <MuiAppBar position="static">
+        <Styled.Toolbar>
+          <Styled.Resources>
             <ResourtceCounter
               resource="cabbage"
               amount={resources?.cabbage ?? 0}
@@ -54,17 +37,17 @@ const GameBar = ({ resources }) => {
               resource="tomato"
               amount={resources?.tomato ?? 0}
             />
-          </Resources>
-          <StyledButton
+          </Styled.Resources>
+          <Styled.Button
             variant="outlined"
             size="large"
             color="inherit"
             onClick={logOut}
           >
             Log out
-          </StyledButton>
-        </StyledToolbar>
-      </AppBar>
+          </Styled.Button>
+        </Styled.Toolbar>
+      </MuiAppBar>
     </div>
   );
 };

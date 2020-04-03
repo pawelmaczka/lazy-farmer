@@ -39,6 +39,7 @@ module.exports = {
     "react/jsx-props-no-spreading": 0,
     "react/jsx-curly-newline": 0,
     "react/require-default-props": 0,
+    "import/prefer-default-export": 0,
     "no-restricted-imports": [
       "error",
       {

@@ -1,19 +1,12 @@
 import React from 'react';
-import { CircularProgress } from '@material-ui/core';
-import styled from 'styled-components/macro';
+import { CircularProgress as MuiCircularProgress } from '@material-ui/core';
 
-const StyledLoadingScreen = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  width: 100vw;
-`;
+import * as Styled from './LoadingScreen.style';
 
 const LoadingScreen = () => (
-  <StyledLoadingScreen data-testid="loading-screen">
-    <CircularProgress />
-  </StyledLoadingScreen>
+  <Styled.StyledLoadingScreen data-testid="loading-screen">
+    <MuiCircularProgress />
+  </Styled.StyledLoadingScreen>
 );
 
 export default LoadingScreen;
