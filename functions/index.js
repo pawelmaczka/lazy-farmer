@@ -48,7 +48,7 @@ exports.plant = functions.https.onCall(async ({ fieldId, type }, context) => {
   const updatedField = {
     id: fieldId,
     type,
-    productionStartTimestamp: Date.now(),
+    plantedAtTimestamp: Date.now(),
   };
 
   const db = admin.firestore();
