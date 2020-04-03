@@ -40,4 +40,12 @@ module.exports = {
     "react/jsx-curly-newline": 0,
     "import/prefer-default-export": 0,
   },
+  "settings": {
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "src"
+      }
+    }
+  }
 };

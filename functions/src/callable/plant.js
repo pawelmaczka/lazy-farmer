@@ -1,30 +1,7 @@
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.ondata((request, response) => {
-//   response.send('Hello from Firebase!');
-// });
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-
-const getDefaultFarm = require('./getDefaultFarm');
-
-admin.initializeApp();
-
-exports.createNewFarm = functions.auth.user().onCreate((user) => {
-  return admin
-    .firestore()
-    .collection('farms')
-    .doc(user.uid)
-    .set(getDefaultFarm());
-});
-
-exports.deleteFarm = functions.auth.user().onDelete((user) => {
-  return admin.firestore().collection('farms').doc(user.uid).delete();
-});
-
-exports.plant = functions.https.onCall(async ({ fieldId, type }, context) => {
+const plant = functions.https.onCall(async ({ fieldId, type }, context) => {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       'unauthenticated',
@@ -87,3 +64,5 @@ exports.plant = functions.https.onCall(async ({ fieldId, type }, context) => {
 
   return 'ok';
 });
+
+export default plant;
