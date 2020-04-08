@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import firebase from 'firebase';
 // import { CircularProgress } from '@material-ui/core';
 
-import getFieldImage from './getFieldImage';
+import { getFieldImage } from './getFieldImage';
 import { getFieldLevel } from './helpers';
 
 import * as Styled from './Field.style';
@@ -31,7 +31,7 @@ const Field = ({ field: { id, plantedAtTimestamp, type } }) => {
 
   return (
     <Styled.Field grayscale={level === 0}>
-      <Image onClick={handleClick} />
+      <Image onClick={handleClick} data-testid="svg-image" />
     </Styled.Field>
   );
 };

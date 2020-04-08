@@ -28,6 +28,4 @@ const fieldImages = {
   tomato: [all0, all0, tomato1, tomato2, tomato3, tomato4],
 };
 
-const getFieldImage = (type, level) => fieldImages[type][level];
-
-export default getFieldImage;
+export const getFieldImage = (type, level) => fieldImages[type][level];
