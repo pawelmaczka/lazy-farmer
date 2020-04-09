@@ -41,14 +41,16 @@ export const Field = styled.div`
   svg {
     pointer-events: none;
 
-    ${({ grayscale }) =>
-      grayscale &&
-      css`
-        filter: grayscale(70%);
-      `}
+    ${({ isMenuOpened, grayscale }) => css`
+      filter: ${grayscale && 'grayscale(70%)'}
+        ${isMenuOpened && 'drop-shadow(5px 5px 10px rgba(255, 255, 255, 0.7))'};
+    `}
 
     &:hover {
-      filter: drop-shadow(5px 5px 10px rgba(221, 255, 83, 0.7));
+      ${({ grayscale }) => css`
+        filter: ${grayscale && 'grayscale(70%)'}
+          drop-shadow(5px 5px 10px rgba(255, 255, 255, 0.7));
+      `}
     }
 
     * {
