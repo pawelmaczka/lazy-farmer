@@ -1,93 +1,84 @@
 import React from 'react';
-import styled, { css } from 'styled-components/macro';
 import PropTypes from 'prop-types';
+import firebase from 'firebase';
 
-const StyledField = styled.div`
-  width: 1em;
-  height: 0.7em;
-  display: inline-block;
-  pointer-events: none;
-  position: relative;
+import PlantMenu from 'components/PlantMenu';
+import { getFieldImage } from './getFieldImage';
+import { getFieldLevel } from './helpers';
 
-  &:nth-child(5n - 3) {
-    transform: translate(-50%, -35%);
-  }
+import * as Styled from './Field.style';
 
-  &:nth-child(5n - 2) {
-    transform: translate(-100%, -70%);
-  }
+const plant = firebase.functions().httpsCallable('plant');
 
-  &:nth-child(5n - 1) {
-    transform: translate(-150%, -105%);
-  }
+const CropMenu = PlantMenu;
 
-  &:nth-child(5n) {
-    transform: translate(-200%, -140%);
-  }
+const Field = ({ field: { id, plantedAtTimestamp, type } }) => {
+  const [level, setLevel] = React.useState(
+    getFieldLevel(type, plantedAtTimestamp)
+  );
 
-  &:nth-child(n + 6) {
-    left: 50%;
-    top: -35%;
-  }
+  const [isMenuOpened, setIsMenuOpened] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  &:nth-child(n + 11) {
-    left: 100%;
-    top: -70%;
-  }
-
-  &:nth-child(n + 16) {
-    left: 150%;
-    top: -105%;
-  }
-
-  svg {
-    pointer-events: none;
-
-    ${({ grayed }) =>
-      grayed &&
-      css`
-        filter: grayscale(70%);
-      `}
-
-    &:hover {
-      filter: drop-shadow(5px 5px 10px rgba(221, 255, 83, 0.7));
-    }
-
-    * {
-      pointer-events: visibleFill;
-      cursor: pointer;
-    }
-  }
-`;
-
-const Field = ({ svgComponents }) => {
-  const [level, setLevel] = React.useState(-1);
-
-  const handleClick = React.useCallback(() => {
-    setLevel((lvl) => (lvl === 4 ? -1 : lvl + 1));
-  }, [level]);
+  const fieldRef = React.useRef(null);
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      setLevel((lvl) => (lvl === 4 ? -1 : lvl + 1));
-    }, 3000 + Math.random() * 60000);
+      setLevel(getFieldLevel(type, plantedAtTimestamp));
+      setAnchorEl(fieldRef.current);
+    }, 1000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
+  }, [plantedAtTimestamp, fieldRef, type]);
+
+  const handleClick = React.useCallback(() => {
+    setAnchorEl(fieldRef.current);
+    setIsMenuOpened(true);
+  }, [fieldRef]);
+
+  const handleClose = React.useCallback(() => {
+    setAnchorEl(null);
+    setIsMenuOpened(false);
   }, []);
 
-  const Image = svgComponents[level < 0 ? 0 : level];
+  const handlePlant = React.useCallback(
+    (fieldType) => {
+      plant({ fieldId: id, type: fieldType });
+    },
+    [id]
+  );
+
+  const Image = getFieldImage(type, level);
 
   return (
-    <StyledField grayed={level === -1} readyToHarvest={level === 3}>
-      <Image onClick={handleClick} />
-    </StyledField>
+    <Styled.Field grayscale={level === 0} isMenuOpened={isMenuOpened}>
+      <Image onClick={handleClick} data-testid="svg-image" ref={fieldRef} />
+      {level === 0 && (
+        <PlantMenu
+          onPlant={handlePlant}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          open={isMenuOpened}
+        />
+      )}
+      {level === 4 && (
+        <CropMenu
+          onPlant={handlePlant}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          open={isMenuOpened}
+        />
+      )}
+    </Styled.Field>
   );
 };
 
 Field.propTypes = {
-  svgComponents: PropTypes.arrayOf(PropTypes.object).isRequired,
+  field: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    plantedAtTimestamp: PropTypes.number,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default Field;

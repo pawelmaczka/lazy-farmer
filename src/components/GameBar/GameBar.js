@@ -1,42 +1,65 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import MuiAppBar from '@material-ui/core/AppBar';
 
 import fire from 'services/firebase';
 
-const Resources = styled.div`
-  flex-grow: 1;
-`;
+import ResourtceCounter from 'components/ResourceCounter';
+import * as Styled from './GameBar.style';
 
-const StyledToolbar = styled(Toolbar)`
-  background: #96a646;
-  height: 10rem;
-`;
-
-const GameBar = () => {
+const GameBar = ({ resources }) => {
   const logOut = React.useCallback(() => {
     fire.auth().signOut();
   }, []);
 
   return (
     <div>
-      <AppBar position="static">
-        <StyledToolbar>
-          <Resources />
-          <Button
+      <MuiAppBar position="static">
+        <Styled.Toolbar>
+          <Styled.Resources>
+            <ResourtceCounter
+              resource="cabbage"
+              amount={resources?.cabbage ?? 0}
+            />
+            <ResourtceCounter
+              resource="carrot"
+              amount={resources?.carrot ?? 0}
+            />
+            <ResourtceCounter
+              resource="potato"
+              amount={resources?.potato ?? 0}
+            />
+            <ResourtceCounter
+              resource="pumpkin"
+              amount={resources?.pumpkin ?? 0}
+            />
+            <ResourtceCounter
+              resource="tomato"
+              amount={resources?.tomato ?? 0}
+            />
+          </Styled.Resources>
+          <Styled.Button
             variant="outlined"
             size="large"
             color="inherit"
             onClick={logOut}
           >
             Log out
-          </Button>
-        </StyledToolbar>
-      </AppBar>
+          </Styled.Button>
+        </Styled.Toolbar>
+      </MuiAppBar>
     </div>
   );
+};
+
+GameBar.propTypes = {
+  resources: PropTypes.shape({
+    cabbage: PropTypes.number.isRequired,
+    carrot: PropTypes.number.isRequired,
+    potato: PropTypes.number.isRequired,
+    pumpkin: PropTypes.number.isRequired,
+    tomato: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default GameBar;
